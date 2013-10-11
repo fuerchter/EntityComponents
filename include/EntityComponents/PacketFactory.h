@@ -20,19 +20,19 @@ namespace ec
 		static sf::Packet eNetToSf(ENetPacket *packet);
 		
 		//Append and extract for some SFML built-in types
-		static void append(sf::Packet &packet, sf::IntRect content);
+		static void append(sf::Packet &packet, sf::IntRect content, bool header=true);
 		static sf::IntRect extractIntRect(sf::Packet &packet);
 		
-		static void append(sf::Packet &packet, sf::Color content);
+		static void append(sf::Packet &packet, sf::Color content, bool header=true);
 		static sf::Color extractColor(sf::Packet &packet);
 		
-		static void append(sf::Packet &packet, sf::Vector2f content);
+		static void append(sf::Packet &packet, sf::Vector2f content, bool header=true);
 		static sf::Vector2f extractVector2f(sf::Packet &packet);
 		
-		static void append(sf::Packet &packet, sf::Vector2u content);
+		static void append(sf::Packet &packet, sf::Vector2u content, bool header=true);
 		static sf::Vector2u extractVector2u(sf::Packet &packet);
 		
-		static void append(sf::Packet &packet, sf::Sprite sprite, string textureName);
+		static void append(sf::Packet &packet, sf::Sprite sprite, string textureName, bool header=true);
 		static sf::Sprite extractSprite(sf::Packet &packet, string textureName, ResourceManager &resources);
 		
 		//Construct EntityManager from packet

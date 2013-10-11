@@ -35,7 +35,7 @@ namespace ec
 		{
 			return sf::FloatRect();
 		}
-		void onCollision(shared_ptr<Entity> collider);
+		void onCollision(shared_ptr<Entity> collider, int playerId=-1);
 		virtual void draw(sf::RenderWindow &window)
 		{
 		

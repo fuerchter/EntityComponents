@@ -16,36 +16,24 @@ namespace ec
 
 	void EntityManager::updateEntities(float deltaTime, int playerId)
 	{
-		if(playerId==-1)
+		for(unsigned int i=0; i<entities_.size(); i++)
 		{
-			for(unsigned int i=0; i<entities_.size(); i++)
+			if(entities_[i])
 			{
-				if(entities_[i])
+				entities_[i]->update(deltaTime, playerId);
+				
+				for(unsigned int j=0; j<entities_.size(); j++)
 				{
-					entities_[i]->update(deltaTime);
-					
-					for(unsigned int j=i+1; j<entities_.size(); j++)
+					if(entities_[j] && i!=j)
 					{
-						if(entities_[j])
+						sf::FloatRect firstBounds=entities_[i]->getBounds();
+						sf::FloatRect secondBounds=entities_[j]->getBounds();
+						if(firstBounds.intersects(secondBounds))
 						{
-							sf::FloatRect firstBounds=entities_[i]->getBounds();
-							sf::FloatRect secondBounds=entities_[j]->getBounds();
-							if(firstBounds.intersects(secondBounds))
-							{
-								entities_[i]->onCollision(entities_[j]);
-								entities_[j]->onCollision(entities_[i]);
-							}
+							entities_[i]->onCollision(entities_[j], playerId);
 						}
 					}
 				}
-			}
-		}
-		else
-		{
-			vector<int> player=getPlayer(playerId);
-			for(unsigned int i=0; i<player.size(); i++)
-			{
-				entities_[player[i]]->update(deltaTime, playerId);
 			}
 		}
 	}

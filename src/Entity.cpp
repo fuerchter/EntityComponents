@@ -61,13 +61,13 @@ namespace ec
 		}
 	}
 
-	void Entity::onCollision(shared_ptr<Entity> collider)
+	void Entity::onCollision(shared_ptr<Entity> collider, int playerId)
 	{
 		for(auto component : components_)
 		{
 			if(component)
 			{
-				component->onCollision(collider);
+				component->onCollision(collider, playerId);
 			}
 		}
 	}
@@ -106,18 +106,22 @@ namespace ec
 	sf::Packet &Entity::appendEntity(sf::Packet& packet, int id)
 	{
 		//Derived Entities will package their additional attributes and the transformable
+		//cout << "Beginning size: " << packet.getDataSize() << endl;
 		packet << (int)ContentType::MEntity;
 		packet << id_;
 		packet << type_;
 		packet << playerId_;
+		//cout << "After header: " << packet.getDataSize() << endl;
 		
 		for(auto component : components_)
 		{
 			component->appendComponent(packet, id);
 		}
+		//cout << "After components: " << packet.getDataSize() << endl;
 		
 		append(packet, id);
 		packet << (int)ContentType::MEntityEnd;
+		//cout << "Derived entity specifics: " << packet.getDataSize() << endl;
 		return packet;
 	}
 }

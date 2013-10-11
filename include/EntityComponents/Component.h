@@ -21,7 +21,7 @@ namespace ec
 		{
 		
 		}
-		virtual void onCollision(shared_ptr<Entity> collider)
+		virtual void onCollision(shared_ptr<Entity> collider, int playerId=-1)
 		{
 		
 		}

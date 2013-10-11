@@ -24,14 +24,12 @@ namespace ec
 	sf::Packet &Sprite::append(sf::Packet &packet, int id)
 	{
 		packet << (int)ContentType::MEntityAttributes;
-		PacketFactory::append(packet, *getSprite(), textureName);
+		PacketFactory::append(packet, *getSprite(), textureName, false);
 		return packet;
 	}
 	
 	sf::Packet &Sprite::extract(sf::Packet &packet, ResourceManager &resources, int id)
 	{
-		int type;
-		packet >> type;
 		packet >> textureName;
 		shared_ptr<sf::Sprite> sprite=make_shared<sf::Sprite>(PacketFactory::extractSprite(packet, textureName, resources));
 		if(!predicting_)

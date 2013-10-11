@@ -18,11 +18,6 @@ namespace ec
 	class EntityManager
 	{
 	public:
-		//Better id distribution (factory function?)!
-		//Do Components have to be marked for deletion?
-		
-		//Get rid of manager append/extract
-		//ComponentType has to be accessible to library user (therefore sfec has to be compiled with ComponentType folder included?).
 		EntityManager(sf::Vector2u windowSize);
 		void update(float deltaTime, int playerId=-1);
 		void draw(sf::RenderWindow &window);
@@ -30,7 +25,7 @@ namespace ec
 		void pushBack(shared_ptr<Entity> entity);
 		void insertAtId(shared_ptr<Entity> entity); //Replaces the current entity at the new entity's id
 		int size();
-		shared_ptr<Entity> get(int id); //TODO: Check whether id>=size()
+		shared_ptr<Entity> get(int id);
 		vector<shared_ptr<Entity>> get(EntityType type); //Returns all entities matching the given type
 		vector<int> getPlayer(int id);
 		void remove(int id);

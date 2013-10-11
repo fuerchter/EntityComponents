@@ -23,12 +23,14 @@ namespace ec
 			}
 			input_.clear();
 		}
-		else
+		else if(playerId==entity->getPlayerId())
 		{
 			for(auto actual : actual_)
 			{
+				//Compare actual to predicted
 				if(predicted_[actual.first]!=actual.second)
 				{
+					entity->transformable->move(actual.second-predicted_[actual.first]);
 					//cout << "Did not predict properly!" << endl;
 				}
 				else
@@ -72,6 +74,41 @@ namespace ec
 		}
 	}
 	
+	void Movement::onCollision(shared_ptr<Entity> collider, int playerId)
+	{
+		shared_ptr<Entity> entity=entity_.lock();
+		if(playerId==-1)
+		{
+			//Server collision reaction (important!)
+			/*if(!actual_.empty())
+			{
+				sf::FloatRect firstBounds=entity->getBounds();
+				sf::FloatRect secondBounds=collider->getBounds();
+				
+				int counter=0;
+				for(auto it=actual_.rbegin(); firstBounds.intersects(secondBounds) && it!=actual_.rend(); it++)
+				{
+					entity->transformable->move(-it->second);
+					it->second.x=0;
+					it->second.y=0;
+					firstBounds=entity->getBounds();
+					counter++;
+				}
+				//cout << "Iterated " << counter << " times, input size: " << actual_.size() << endl;
+			}*/
+		}
+		else if(playerId==entity->getPlayerId())
+		{
+			//Client collision reaction
+			for(auto input : input_)
+			{
+				entity->transformable->move(-predicted_[input.first]);
+				predicted_.erase(input.first);
+			}
+			input_.clear();
+		}
+	}
+	
 	sf::Packet &Movement::append(sf::Packet &packet, int id)
 	{
 		if(id==-1)
@@ -80,7 +117,7 @@ namespace ec
 			for(auto actual : actual_)
 			{
 				packet << actual.first;
-				PacketFactory::append(packet, actual.second);
+				PacketFactory::append(packet, actual.second, false);
 			}
 			//Clear actual on send
 			actual_.clear();
@@ -91,7 +128,7 @@ namespace ec
 			for(auto input : input_)
 			{
 				packet << input.first;
-				PacketFactory::append(packet, input.second);
+				PacketFactory::append(packet, input.second, false);
 			}
 			//Clear input on send
 			input_.clear();
@@ -105,12 +142,10 @@ namespace ec
 		{
 			int size;
 			packet >> size;
-			int type;
 			for(int i=0; i<size; i++)
 			{
 				int sequence;
 				packet >> sequence;
-				packet >> type;
 				sf::Vector2f input=PacketFactory::extractVector2f(packet);
 				input_.insert(pair<int, sf::Vector2f>(sequence, input));
 			}
@@ -119,12 +154,10 @@ namespace ec
 		{
 			int size;
 			packet >> size;
-			int type;
 			for(int i=0; i<size; i++)
 			{
 				int sequence;
 				packet >> sequence;
-				packet >> type;
 				sf::Vector2f actual=PacketFactory::extractVector2f(packet);
 				actual_.insert(pair<int, sf::Vector2f>(sequence, actual));
 			}

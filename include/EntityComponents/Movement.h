@@ -15,6 +15,7 @@ namespace ec
 		Movement(shared_ptr<Entity> entity);
 		
 		virtual void update(float deltaTime, int playerId) override;
+		virtual void onCollision(shared_ptr<Entity> collider, int playerId=-1) override;
 		
 		virtual sf::Packet &append(sf::Packet &packet, int id=-1) override;
 		virtual sf::Packet &extract(sf::Packet &packet, int id=-1) override;

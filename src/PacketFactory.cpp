@@ -14,9 +14,12 @@ namespace ec
 		return res;
 	}
 
-	void PacketFactory::append(sf::Packet &packet, sf::IntRect content)
+	void PacketFactory::append(sf::Packet &packet, sf::IntRect content, bool header)
 	{
-		packet << (int)ContentType::MIntRect;
+		if(header)
+		{
+			packet << (int)ContentType::MIntRect;
+		}
 		
 		packet << content.left;
 		packet << content.top;
@@ -34,9 +37,12 @@ namespace ec
 		return res;
 	}
 
-	void PacketFactory::append(sf::Packet &packet, sf::Color content)
+	void PacketFactory::append(sf::Packet &packet, sf::Color content, bool header)
 	{
-		packet << (int)ContentType::MColor;
+		if(header)
+		{
+			packet << (int)ContentType::MColor;
+		}
 		
 		packet << content.r;
 		packet << content.g;
@@ -54,9 +60,12 @@ namespace ec
 		return res;
 	}
 
-	void PacketFactory::append(sf::Packet &packet, sf::Vector2f content)
+	void PacketFactory::append(sf::Packet &packet, sf::Vector2f content, bool header)
 	{
-		packet << (int)ContentType::MVector2f;
+		if(header)
+		{
+			packet << (int)ContentType::MVector2f;
+		}
 		
 		packet << content.x;
 		packet << content.y;
@@ -70,9 +79,12 @@ namespace ec
 		return res;
 	}
 	
-	void PacketFactory::append(sf::Packet &packet, sf::Vector2u content)
+	void PacketFactory::append(sf::Packet &packet, sf::Vector2u content, bool header)
 	{
-		packet << (int)ContentType::MVector2u;
+		if(header)
+		{
+			packet << (int)ContentType::MVector2u;
+		}
 		
 		packet << content.x;
 		packet << content.y;
@@ -86,39 +98,31 @@ namespace ec
 		return res;
 	}
 
-	void PacketFactory::append(sf::Packet &packet, sf::Sprite sprite, string textureName)
+	void PacketFactory::append(sf::Packet &packet, sf::Sprite sprite, string textureName, bool header)
 	{
-		packet << (int)ContentType::MSprite;
+		if(header)
+		{
+			packet << (int)ContentType::MSprite;
+		}
 		
 		packet << textureName;
-		append(packet, sprite.getTextureRect());
-		append(packet, sprite.getColor());
+		append(packet, sprite.getTextureRect(), false);
+		append(packet, sprite.getColor(), false);
 		
-		append(packet, sprite.getPosition());
+		append(packet, sprite.getPosition(), false);
 		packet << sprite.getRotation();
-		append(packet, sprite.getScale());
-		append(packet, sprite.getOrigin());
+		append(packet, sprite.getScale(), false);
+		append(packet, sprite.getOrigin(), false);
 	}
 
 	sf::Sprite PacketFactory::extractSprite(sf::Packet &packet, string textureName, ResourceManager &resources)
 	{
-		int type;
-		packet >> type;
 		sf::IntRect textureRect=extractIntRect(packet);
-		
-		packet >> type;
 		sf::Color color=extractColor(packet);
-		
-		packet >> type;
 		sf::Vector2f position=extractVector2f(packet);
-		
 		float rotation;
 		packet >> rotation;
-		
-		packet >> type;
 		sf::Vector2f scale=extractVector2f(packet);
-		
-		packet >> type;
 		sf::Vector2f origin=extractVector2f(packet);
 		
 		sf::Sprite res;
