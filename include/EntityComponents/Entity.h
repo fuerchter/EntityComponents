@@ -30,7 +30,7 @@ namespace ec
 		bool predicting();
 		void setPredicting(bool predicting);
 		
-		void update(float deltaTime, int playerId=-1);
+		void update(float deltaTime, sf::RenderWindow &window, int playerId=-1);
 		virtual sf::FloatRect getBounds() //TODO: Check whether two (0, 0, 0, 0) FloatRects intersect
 		{
 			return sf::FloatRect();

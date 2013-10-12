@@ -8,19 +8,19 @@ namespace ec
 		
 	}
 
-	void EntityManager::update(float deltaTime, int playerId)
+	void EntityManager::update(float deltaTime, sf::RenderWindow &window, int playerId)
 	{
-		updateEntities(deltaTime, playerId);
+		updateEntities(deltaTime, window, playerId);
 		removeEntities();
 	}
 
-	void EntityManager::updateEntities(float deltaTime, int playerId)
+	void EntityManager::updateEntities(float deltaTime, sf::RenderWindow &window, int playerId)
 	{
 		for(unsigned int i=0; i<entities_.size(); i++)
 		{
 			if(entities_[i])
 			{
-				entities_[i]->update(deltaTime, playerId);
+				entities_[i]->update(deltaTime, window, playerId);
 				
 				for(unsigned int j=0; j<entities_.size(); j++)
 				{

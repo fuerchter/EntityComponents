@@ -50,13 +50,13 @@ namespace ec
 		predicting_=predicting;
 	}
 
-	void Entity::update(float deltaTime, int playerId)
+	void Entity::update(float deltaTime, sf::RenderWindow &window, int playerId)
 	{
 		for(auto component : components_)
 		{
 			if(component)
 			{
-				component->update(deltaTime, playerId);
+				component->update(deltaTime, window, playerId);
 			}
 		}
 	}

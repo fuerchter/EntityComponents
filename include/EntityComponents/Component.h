@@ -17,7 +17,7 @@ namespace ec
 		int getId();
 		void setId(int id);
 		
-		virtual void update(float deltaTime, int playerId)
+		virtual void update(float deltaTime, sf::RenderWindow &window, int playerId)
 		{
 		
 		}

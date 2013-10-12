@@ -8,7 +8,7 @@ namespace ec
 	
 	}
 
-	void Movement::update(float deltaTime, int playerId)
+	void Movement::update(float deltaTime, sf::RenderWindow &window, int playerId)
 	{
 		shared_ptr<Entity> entity=entity_.lock();
 		//sf::Vector2f position=entity->transformable->getPosition();

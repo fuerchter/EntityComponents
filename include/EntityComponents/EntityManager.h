@@ -19,7 +19,7 @@ namespace ec
 	{
 	public:
 		EntityManager(sf::Vector2u windowSize);
-		void update(float deltaTime, int playerId=-1);
+		void update(float deltaTime, sf::RenderWindow &window, int playerId=-1);
 		void draw(sf::RenderWindow &window);
 		
 		void pushBack(shared_ptr<Entity> entity);
@@ -32,7 +32,7 @@ namespace ec
 		
 		sf::Vector2u getWindowSize();
 	private:
-		void updateEntities(float deltaTime, int playerId=-1);
+		void updateEntities(float deltaTime, sf::RenderWindow &window, int playerId=-1);
 		void removeEntities();
 		
 		vector<shared_ptr<Entity>> entities_;
