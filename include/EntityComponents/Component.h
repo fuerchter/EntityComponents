@@ -28,7 +28,7 @@ namespace ec
 		
 		virtual sf::Packet &appendComponent(sf::Packet &packet, int id=-1)
 		{
-			packet << (int)ContentType::MComponent;
+			packet << (int)MessageType::MComponent;
 			packet << id_;
 			packet << type_;
 			

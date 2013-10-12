@@ -107,7 +107,7 @@ namespace ec
 	{
 		//Derived Entities will package their additional attributes and the transformable
 		//cout << "Beginning size: " << packet.getDataSize() << endl;
-		packet << (int)ContentType::MEntity;
+		packet << (int)MessageType::MEntity;
 		packet << id_;
 		packet << type_;
 		packet << playerId_;
@@ -120,7 +120,7 @@ namespace ec
 		//cout << "After components: " << packet.getDataSize() << endl;
 		
 		append(packet, id);
-		packet << (int)ContentType::MEntityEnd;
+		packet << (int)MessageType::MEntityEnd;
 		//cout << "Derived entity specifics: " << packet.getDataSize() << endl;
 		return packet;
 	}

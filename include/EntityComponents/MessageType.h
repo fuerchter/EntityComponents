@@ -1,10 +1,10 @@
-#ifndef CONTENTTYPE
-#define CONTENTTYPE
+#ifndef MESSAGETYPE
+#define MESSAGETYPE
 
 namespace ec
 {
 	//RENAME??
-	enum ContentType
+	enum MessageType
 	{
 		MInt,
 		MFloat,
@@ -14,8 +14,6 @@ namespace ec
 		MVector2f,
 		MVector2u,
 		MSprite,
-		MSpriteCollection, //Am i even using this?
-		MEntityManager,
 		
 		MInsertEntity,
 		MEntity,
@@ -23,10 +21,6 @@ namespace ec
 		MEntityEnd,
 		MRemoveEntity,
 		MComponent,
-		
-		MInsertSprite,
-		MChangeSprite,
-		MRemoveSprite
 	};
 }
 

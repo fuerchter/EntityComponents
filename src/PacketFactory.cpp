@@ -18,7 +18,7 @@ namespace ec
 	{
 		if(header)
 		{
-			packet << (int)ContentType::MIntRect;
+			packet << (int)MessageType::MIntRect;
 		}
 		
 		packet << content.left;
@@ -41,7 +41,7 @@ namespace ec
 	{
 		if(header)
 		{
-			packet << (int)ContentType::MColor;
+			packet << (int)MessageType::MColor;
 		}
 		
 		packet << content.r;
@@ -64,7 +64,7 @@ namespace ec
 	{
 		if(header)
 		{
-			packet << (int)ContentType::MVector2f;
+			packet << (int)MessageType::MVector2f;
 		}
 		
 		packet << content.x;
@@ -83,7 +83,7 @@ namespace ec
 	{
 		if(header)
 		{
-			packet << (int)ContentType::MVector2u;
+			packet << (int)MessageType::MVector2u;
 		}
 		
 		packet << content.x;
@@ -102,7 +102,7 @@ namespace ec
 	{
 		if(header)
 		{
-			packet << (int)ContentType::MSprite;
+			packet << (int)MessageType::MSprite;
 		}
 		
 		packet << textureName;
@@ -134,33 +134,6 @@ namespace ec
 		res.setScale(scale);
 		res.setOrigin(origin);
 		return res;
-	}
-	
-	shared_ptr<EntityManager> PacketFactory::extractEntities(sf::Packet &packet, ResourceManager &resources)
-	{
-		shared_ptr<EntityManager> entities;
-		int type;
-		packet >> type;
-		sf::Vector2u windowSize=extractVector2u(packet);
-		entities=make_shared<EntityManager>(windowSize);
-		
-		//For each entity: Extract components, Push components onto entity, Push entity onto entities
-		while(packet >> type)
-		{
-			switch(type)
-			{
-				case ContentType::MEntity:
-				{
-					extractEntity(packet, entities, resources);
-					break;
-				}
-				default:
-				{
-					break;
-				}
-			}
-		}
-		return entities;
 	}
 	
 	shared_ptr<Entity> PacketFactory::extractEntity(sf::Packet &packet, shared_ptr<EntityManager> entities, ResourceManager &resources, int extractionId)
@@ -198,16 +171,16 @@ namespace ec
 		
 		//Components and attributes
 		int type;
-		while(packet >> type && type!=ContentType::MEntityEnd)
+		while(packet >> type && type!=MessageType::MEntityEnd)
 		{
 			switch(type)
 			{
-				case ContentType::MComponent:
+				case MessageType::MComponent:
 				{
 					extractComponent(packet, entity, extractionId);
 					break;
 				}
-				case ContentType::MEntityAttributes:
+				case MessageType::MEntityAttributes:
 				{
 					entity->extract(packet, resources, extractionId);
 					break;

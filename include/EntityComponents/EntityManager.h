@@ -31,8 +31,6 @@ namespace ec
 		void remove(int id);
 		
 		sf::Vector2u getWindowSize();
-		
-		sf::Packet& operator>>(sf::Packet& packet);
 	private:
 		void updateEntities(float deltaTime, int playerId=-1);
 		void removeEntities();

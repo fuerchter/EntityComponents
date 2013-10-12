@@ -23,7 +23,7 @@ namespace ec
 	
 	sf::Packet &Sprite::append(sf::Packet &packet, int id)
 	{
-		packet << (int)ContentType::MEntityAttributes;
+		packet << (int)MessageType::MEntityAttributes;
 		PacketFactory::append(packet, *getSprite(), textureName, false);
 		return packet;
 	}

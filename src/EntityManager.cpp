@@ -81,6 +81,10 @@ namespace ec
 
 	shared_ptr<Entity> EntityManager::get(int id)
 	{
+		if(id>=size())
+		{
+			return shared_ptr<Entity>();
+		}
 		return entities_[id];
 	}
 	
@@ -118,21 +122,5 @@ namespace ec
 	sf::Vector2u EntityManager::getWindowSize()
 	{
 		return windowSize_;
-	}
-	
-	sf::Packet& EntityManager::operator>>(sf::Packet& packet)
-	{
-		packet << (int)ContentType::MEntityManager;
-		packet << (int)ContentType::MVector2u;
-		packet << (sf::Uint32)windowSize_.x;
-		packet << (sf::Uint32)windowSize_.y;
-		for(auto entity : entities_)
-		{
-			if(entity)
-			{
-				entity->appendEntity(packet);
-			}
-		}
-		return packet;
 	}
 }

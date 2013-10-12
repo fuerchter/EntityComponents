@@ -6,7 +6,7 @@
 #include "ResourceManager/ResourceManager.h"
 
 #include "EntityType.h"
-#include "ContentType.h"
+#include "MessageType.h"
 
 #include "EntityManager.h"
 #include "Component.h"

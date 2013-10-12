@@ -36,7 +36,6 @@ namespace ec
 		static sf::Sprite extractSprite(sf::Packet &packet, string textureName, ResourceManager &resources);
 		
 		//Construct EntityManager from packet
-		static shared_ptr<EntityManager> extractEntities(sf::Packet &packet, ResourceManager &resources); //append/extract onto already existing objects?
 		static shared_ptr<Entity> extractEntity(sf::Packet &packet, shared_ptr<EntityManager> entities, ResourceManager &resources, int extractionId=-1);
 		static shared_ptr<Component> extractComponent(sf::Packet &packet, shared_ptr<Entity> entity, int extractionId=-1);
 	private:
